@@ -13,49 +13,60 @@ import java.io.*;
 public class UDPClient{
     public static void main(String args[]){ 
 		// args give message contents and destination hostname
-		DatagramSocket aSocket = null;
+		DatagramSocket clientDatagramSocket = null;
+		String serverName = "localhost";
+		int serverPort = 33600;	
+
 		try {
+			serverName = args[1];
+
 			/** 
-			 Suporta socket para enviar e receber datagramas
-			 Construtores com argumentos e sem argumentos.
-			 É possível escolher a porta ou permitir que o sistema
-			 escolha qualquer porta disponivel
-			 Sempre maior que 1024
+			 * Suporta socket para enviar e receber datagramas
+			 * Construtores com argumentos e sem argumentos.
+			 * É possível escolher a porta ou permitir que o sistema
+			 * escolha qualquer porta disponivel
+			 * Sempre maior que 1024
 			 */
-			aSocket = new DatagramSocket();    
-			byte [] m = args[0].getBytes();
+			clientDatagramSocket = new DatagramSocket();			
+			byte[] receiveData = args[0].getBytes();	
 			
-			
-			InetAddress aHost = InetAddress.getByName(args[1]);
-			//InetAddress aHost = InetAddress.getByName("localhost");
-			
-			int serverPort = 33600;	
 			
 			/**
-			 RECEBIMENTO
-			 Um argumento é um arreay onde a mensagem será armazenada e o
-			 seu tamanho
+			 * The InetAddress class represents an IP address, both IPv4 
+			 * and IPv6. Basically you create instances of this class to 
+			 * use with other classes such as Socket, ServerSocket, DatagramPacket 
+			 * and DatagramSocket. In the simplest case, you can use this class 
+			 * to know the IP address from a hostname, and vice-versa.
+			 */			
+			InetAddress inetAddress = InetAddress.getByName(serverName);									
+			
+			/**
+			 * RECEBIMENTO
+			 * Um argumento é um arreay onde a mensagem será armazenada e o
+			 * seu tamanho
 			*/
-			DatagramPacket request = new DatagramPacket(m,  args[0].length(), aHost, serverPort);
-			aSocket.send(request);			                        
+			DatagramPacket request = new DatagramPacket(receiveData,  args[0].length(), inetAddress, serverPort);
+			clientDatagramSocket.send(request);	
+			System.out.println("Pacote UDP para " + serverName + ":" + serverPort);		                        
 			byte[] buffer = new byte[1000];
 			
 			/** 
-			 ENVIO
-			 Fornece dois construtores, um para envio e outro para recebimento 
-			 de datagrams
-			 No Envio ele cria uma instancia de um array de bytes contendo a mensagem,
-			 comprimento da mensagem, endereço IP e numero da porta de destino socket
+			 * ENVIO
+			 * Fornece dois construtores, um para envio e outro para recebimento 
+			 * de datagrams
+			 * No Envio ele cria uma instancia de um array de bytes contendo a mensagem,
+			 * comprimento da mensagem, endereço IP e numero da porta de destino socket
 			 */
 			DatagramPacket reply = new DatagramPacket(buffer, buffer.length);	
-			aSocket.receive(reply);
-			System.out.println("Reply: " + new String(reply.getData()));	
+			clientDatagramSocket.receive(reply);
+			System.out.println("Resposta: " + new String(reply.getData()));	
+
 		} catch (SocketException e){
 			System.out.println("Socket: " + e.getMessage());
 		} catch (IOException e){
 			System.out.println("IO: " + e.getMessage());
 		} finally {
-			if(aSocket != null) aSocket.close();
+			if(clientDatagramSocket != null) clientDatagramSocket.close();
 		}
 	}		      	
 }

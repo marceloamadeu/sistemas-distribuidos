@@ -12,7 +12,7 @@ public class UDPServer{
 	 */	
     public static void main(String args[]){ 
 
-		DatagramSocket aSocket = null;
+		DatagramSocket datagramSocket = null;
 		byte[] buffer = new byte[1000];
 		boolean running = true;
 
@@ -31,7 +31,7 @@ public class UDPServer{
 			 escolha qualquer porta disponivel
 			 Sempre maior que 1024
 			 */
-	    	aSocket = new DatagramSocket(33600);								
+	    	datagramSocket = new DatagramSocket(33600);								
 			 
 			while(running) {
 				
@@ -39,7 +39,7 @@ public class UDPServer{
 				// Um argumento é um arreay onde a mensagem será armazenada e o
 				// seu tamanho
  				request = new DatagramPacket(buffer, buffer.length);
-				aSocket.receive(request);  
+				datagramSocket.receive(request);  
 				
 				address = request.getAddress();
 	            port = request.getPort();
@@ -58,22 +58,20 @@ public class UDPServer{
 					
 				if (received.equals("close")) {
 					running = false;
+					datagramSocket.send(reply);
 					continue;
-				}
+				}				
 
-				//if (received.equals("ping"))
-				//	aSocket.send(reply);
-
-				aSocket.send(reply);
+				datagramSocket.send(reply);
 				
 			}
-			aSocket.close();
+			datagramSocket.close();
 		} catch (SocketException e){
 			System.out.println("Socket: " + e.getMessage());
 		} catch (IOException e) {
 			System.out.println("IO: " + e.getMessage());
 		} finally {
-			if(aSocket != null) aSocket.close();
+			if(datagramSocket != null) datagramSocket.close();
 		}
     }
 }
