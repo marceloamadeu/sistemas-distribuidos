@@ -1,0 +1,9 @@
+br/edu/utfpr/app/ClientInterface.class
+br/edu/utfpr/app/ServerImpl.class
+br/edu/utfpr/app/ClientImpl.class
+br/edu/utfpr/app/ServerInterface.class
+br/edu/utfpr/app/entity/SurveyVote.class
+br/edu/utfpr/app/AppServer.class
+br/edu/utfpr/app/entity/User.class
+br/edu/utfpr/app/AppClient.class
+br/edu/utfpr/app/entity/Survey.class
