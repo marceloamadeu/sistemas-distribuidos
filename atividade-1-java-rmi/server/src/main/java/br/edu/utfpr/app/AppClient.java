@@ -3,14 +3,13 @@ package br.edu.utfpr.app;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.rmi.Naming;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import br.edu.utfpr.app.entity.Survey;
 import br.edu.utfpr.app.entity.User;
 
 
@@ -56,6 +55,29 @@ public class AppClient {
         }
     }
 
+
+    /**
+     * 
+     * @param server
+     * @param survey
+     */
+    public static void addSurvey(ServerInterface server, Survey survey) {
+        try {
+            server.addSurvey(survey);
+        } catch (RemoteException e) {
+            System.out.println("Survey registration error: " + e.toString());
+        }
+    }
+
+    public static Survey findSurvey(ServerInterface server, String name, String title) {
+        try {
+            return server.getSurvey(name, title);
+        } catch (RemoteException e) {
+            System.out.println("Survey registration error: " + e.toString());
+        }
+        return null;
+    }
+
     public static void main(String args[]) {
         try {          
 
@@ -91,7 +113,7 @@ public class AppClient {
             System.out.println(" ");
             User user = new User();
 
-            System.out.println("Name: ");
+            System.out.println("Nome: ");
             user.setName(bufferedReader.readLine());
 
             System.out.println("Public Key: ");
@@ -105,9 +127,10 @@ public class AppClient {
 
 
 
-            String[] options = {"1- Option 1",
-                    "2- Option 2",
-                    "3- Option 3",
+            String[] options = {
+                    "1 - Cadastro de Enquete",
+                    "2 - Cadastro de Voto em uma Enquete ",
+                    "3 - Consulta de Enquete",
                     "9- Exit",
             };
 
@@ -119,8 +142,50 @@ public class AppClient {
                 try {
                     option = scanner.nextInt();
 
-                    if (option == 5) {
+                    if (option == 1) {
+                        Survey survey = new Survey();
+
+                        System.out.println("Nome: ");
+                        survey.setName(bufferedReader.readLine());
+                            
+                        System.out.println("Titulo: ");
+                        survey.setTitle(bufferedReader.readLine());
+
+                        System.out.println("Local do Evento: ");
+                        survey.setLocal(bufferedReader.readLine());
+
+                        System.out.println("Proposta de Tempo (data e hora - 99/99/9999 12:00): ");
+                        survey.setDateTime(bufferedReader.readLine());
+
+                        System.out.println("Data Limite Respostas (data e hora - 99/99/9999 12:00): ");
+                        survey.setFinalDate(bufferedReader.readLine());
+
+                        addSurvey(server, survey);
                         
+                    }
+
+
+
+                    if (option == 3) {
+                        
+                        System.out.println("Nome: ");
+                        String name = bufferedReader.readLine();
+                            
+                        System.out.println("Titulo: ");
+                        String title = bufferedReader.readLine();
+
+                        
+                        Survey find = findSurvey(server, name, title);
+
+                        if (find == null) {
+                            System.out.println("Enquete não encontrada!!!");
+                        } else {
+                            System.out.println("Nome: " + find.getName());
+                            System.out.println("Titulo: " + find.getTitle());
+                            System.out.println("Local do Evento: " + find.getLocal());
+                            System.out.println("Proposta de Tempo: " + find.getDateTime());
+                            System.out.println("Data Limite Respostas: " + find.getFinalDate());
+                        }
                         
                     }
                 } catch (InputMismatchException ex){
@@ -136,31 +201,8 @@ public class AppClient {
             System.out.println("Client Unregistered for callback");
             scanner.close();
                         
-
-            //InputStreamReader is = new InputStreamReader(System.in);
-            //BufferedReader br = new BufferedReader(is);
-            //System.out.println("Enter how many seconds to stay registered:");
-            //String timeDuration = br.readLine();
-            //int time = Integer.parseInt(timeDuration);
-
-            //String registryURL = "rmi://localhost:" + SERVER_PORT + "/callback";  
-            //ServerInterface server = (ServerInterface) Naming.lookup(registryURL);
-            //System.out.println("Lookup completed " );
-            //System.out.println("Server said " + server.sayHello());
-            //ClientInterface callbackClientObj = new ClientImpl();
-            
-            // register for callback
-            //server.registerForCallback(callbackClientObj);
-            //System.out.println("Registered for callback.");
-            //try {
-            //    Thread.sleep(time * 1000);
-            //  } catch (InterruptedException e) { 
-            //    System.out.println("InterruptedException in AppClient.main: " + e);
-            //}
-            //server.unregisterForCallback(callbackClientObj);
-            //System.out.println("Unregistered for callback.");
         } catch (Exception e) {
-            System.out.println("Exception in CallbackClient: " + e);
+            System.out.println("Exception in CallbackClient: " + e);            
         } 
       } 
 }

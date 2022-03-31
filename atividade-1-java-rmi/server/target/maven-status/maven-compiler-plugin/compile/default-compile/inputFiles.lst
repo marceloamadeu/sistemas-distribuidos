@@ -1,9 +1,9 @@
-/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/entity/SurveyVote.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/ServerInterface.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/entity/SurveyVote.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/entity/User.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/ServerImpl.java
-/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/ClientInterface.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/AppServer.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/ClientInterface.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/entity/Survey.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/AppClient.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/server/src/main/java/br/edu/utfpr/app/ClientImpl.java

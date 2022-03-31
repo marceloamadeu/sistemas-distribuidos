@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import br.edu.utfpr.app.entity.Survey;
 import br.edu.utfpr.app.entity.SurveyVote;
@@ -22,7 +22,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
     protected ServerImpl() throws RemoteException {
         super();
-        userList = new Vector<>();
+        userList = new Vector();
     }
 
     @Override
@@ -49,11 +49,14 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
-    public Survey getSurvey(int survey) throws RemoteException {
-        Optional<Survey> findSurvey = getSurveys().stream().filter(s -> s.getId() == survey).findFirst();
+    public Survey getSurvey(String name, String title) throws RemoteException {
+        List<Survey> findSurvey = 
+            getSurveys().stream().filter(s -> s.getTitle().contains(title) 
+                || s.getName().contains(name) 
+            ).collect(Collectors.toList());
         if (findSurvey == null)
             return null;
-        return findSurvey.get();
+        return findSurvey.get(0);
     }
 
     @Override

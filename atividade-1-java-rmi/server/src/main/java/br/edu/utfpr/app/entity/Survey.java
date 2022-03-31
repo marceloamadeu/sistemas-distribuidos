@@ -1,7 +1,6 @@
 package br.edu.utfpr.app.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class Survey implements Serializable {
 
@@ -11,15 +10,15 @@ public class Survey implements Serializable {
     private String name;
     private String title;
     private String local;
-    private LocalDateTime dateTime;
-    private LocalDateTime finalDate;
+    private String dateTime;
+    private String finalDate;
 
     public Survey() {
 
     }
 
     public Survey(String name, String title, String local, 
-    LocalDateTime dateTime, LocalDateTime finalDate) {
+    String dateTime, String finalDate) {
         this.name = name;
         this.title = title;
         this.local = local;
@@ -59,19 +58,19 @@ public class Survey implements Serializable {
         this.local = local;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return this.dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
-    public LocalDateTime getFinalDate() {
+    public String getFinalDate() {
         return this.finalDate;
     }
 
-    public void setFinalDate(LocalDateTime finalDate) {
+    public void setFinalDate(String finalDate) {
         this.finalDate = finalDate;
     }
 
