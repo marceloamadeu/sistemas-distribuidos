@@ -13,15 +13,16 @@ import br.edu.utfpr.app.entity.User;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
-    private Vector userList;
-    private List<User> users = new ArrayList<>();
+    private Vector userList;   
+    
+    //private List<User> users = new ArrayList<>();
     private List<Survey> surveys = new ArrayList<>();
     private List<SurveyVote> surveyVotes = new ArrayList<>();
 
 
     protected ServerImpl() throws RemoteException {
         super();
-        userList = new Vector();
+        userList = new Vector<>();
     }
 
     @Override
@@ -31,8 +32,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
     @Override
     public void addUser(User user) throws RemoteException {
-        getUsers().add(user);
-        System.out.println("Registered new user: " + user.getName());
+        userList.addElement(user);        
+        System.out.println("Registered new user: " + user.getName());                        
     }
 
     @Override
@@ -63,14 +64,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
  
 
-    public List<User> getUsers() {
-        return this.users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     public List<Survey> getSurveys() {
         return this.surveys;
     }
@@ -88,14 +81,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
-    public void registerForCallback(ClientInterface clientObject) throws RemoteException {
-              
+    public void registerForCallback(ClientInterface clientObject) throws RemoteException {              
         if (!(userList.contains(clientObject))) {
-            userList.addElement(clientObject);
-            System.out.println("Registered new client ");
+            userList.addElement(clientObject);            
+            System.out.println("Registered new client for callback...: Ready");
             doCallbacks();
-        } // end if
-        
+        }        
     }
 
     @Override
@@ -104,26 +95,27 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
             System.out.println("Unregistered client ");
           } else {
              System.out.println(
-               "unregister: clientwasn't registered.");
+               "unregister: client wasn't registered.");
           }
         
     }
 
     private synchronized void doCallbacks( ) throws java.rmi.RemoteException{
         // make callback to each registered client
-        System.out.println(
-           "**************************************\n"
-            + "Callbacks initiated ---");
+        if (userList.size() > 0)
+            System.out.println("**************************************");        
+        
         for (int i = 0; i < userList.size(); i++){
-          System.out.println("doing "+ i +"-th callback\n");    
-          // convert the vector object to a callback object
-          ClientInterface nextClient = (ClientInterface)userList.elementAt(i);
-          // invoke the callback method
-            nextClient.notifyMe("Number of registered clients = " +  userList.size());
-        }// end for
-        System.out.println("********************************\n" +
-                           "Server completed callbacks ---");
-      } // doCallbacks
+                        
+            // convert the vector object to a callback object
+            ClientInterface nextClient = (ClientInterface) userList.elementAt(i);        
+            // invoke the callback method
+            nextClient.notifyMe("Number of registered clients = " +  userList.size());                            
+        }
+                                
+        if (userList.size() > 0)
+            System.out.println("**************************************");                           
+      } 
 
     
 }

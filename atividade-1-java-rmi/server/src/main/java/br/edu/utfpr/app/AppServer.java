@@ -7,32 +7,44 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * A Classe AppaServer tem um método main que cria uma instância de ServerImpl
+ * (objeto Remoto), e em seguida, vincula essa instância a um Registry.
+ * 
+ * O Java RMI Registry é um serviço de nomes simples que permite que os clientes
+ * obtenham uma referência (stub / skeleton). Em geral, um registro é usado (se 
+ * for o caso) apenas para localizar o primeiro objeto remoto que um cliente 
+ * precisa usar.
+ */
 public class AppServer {
 
-    public static final String SERVER_NAME = "survey_server";
+    public static final String SERVER_NAME = "localhost";
     public static final int SERVER_PORT = 33600;
 
-    public static void main( String[] args ) {
+     public AppServer() {
+
+     }
+
+    public static void main(String[] args) {
         
-        try {
-            //InputStreamReader is = new InputStreamReader(System.in);
-            //BufferedReader br = new BufferedReader(is);            
-    
-            startRegistry(SERVER_PORT);
-            ServerImpl serverObj = new ServerImpl();
-            String url = "rmi://localhost:" + SERVER_PORT + "/callback";
-            Naming.rebind(url, serverObj);
+        try { 
+            doRegistry(SERVER_PORT);            
+            ServerImpl server = new ServerImpl();
+
+            String url = "rmi://" + SERVER_NAME + ":" + SERVER_PORT + "/callback";
+            Naming.rebind(url, server);
             System.out.println("Callback Server ready.");
         } catch (Exception e) {
-            System.out.println("Exception in AppServer.main: " + e);
+            System.out.println("Exception in AppServer.main: " + e.toString());
         } 
     } // end main
         
-    private static void startRegistry(int serverPort) throws RemoteException{
+    private static void doRegistry(int serverPort) throws RemoteException{
         try {
-            Registry registry = LocateRegistry.getRegistry(serverPort);
-            registry.list( );        
+            Registry registry = LocateRegistry.getRegistry();
+            registry.list();        
         } catch (RemoteException e) {             
             Registry registry = LocateRegistry.createRegistry(serverPort);
         }

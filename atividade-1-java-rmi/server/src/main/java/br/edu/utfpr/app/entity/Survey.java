@@ -1,8 +1,11 @@
 package br.edu.utfpr.app.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Survey {
+public class Survey implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int id;
     private String name;

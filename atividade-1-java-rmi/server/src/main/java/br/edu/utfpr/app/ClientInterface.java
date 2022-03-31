@@ -6,5 +6,5 @@ import java.rmi.RemoteException;
 public interface ClientInterface extends Remote {
     //void update(int survey) throws RemoteException;
     //void notifyChanges() throws RemoteException;
-    public String notifyMe(String message) throws java.rmi.RemoteException;
+    public String notifyMe(String message) throws RemoteException;
 }
