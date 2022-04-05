@@ -1,5 +1,3 @@
-package br.edu.utfpr.app;
-
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -35,11 +33,9 @@ public class MainServerApp {
     public static void main(String[] args) {
         try {            
 
-            
-            clearPrintHeader();
-
             Server server = new ServerImpl();            
-
+            
+            // Bind the remote object's stub in the registry
             Registry registry = LocateRegistry.createRegistry(SERVER_PORT);            
             System.out.println(TEXT_GREEN + "[+] " + TEXT_RESET + "java RMI registry created");
 
@@ -51,53 +47,16 @@ public class MainServerApp {
              */
             registry.rebind(url, server);
 
-            System.out.println(TEXT_GREEN + "[+] " + TEXT_RESET + "Server is ready at " + SERVER_NAME + " ready");            
+            System.out.println(TEXT_GREEN + "[+] " + TEXT_RESET + "Server is ready at " + SERVER_NAME + ":" + SERVER_PORT);            
         } catch (RemoteException e) {            
             System.out.println(TEXT_RED + "[-] " + TEXT_RESET + "RemoteException in MainServerApp.main: " + e.toString());                   
         }     
     }   
-
-
-
-    private static void clearPrintHeader() {
-
-        // Limpa o console
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-
-        // Header
-        System.out.println("#####################################################");
-        System.out.println("####                  SERVIDOR                   ####");
-        System.out.println("#####################################################");
-        System.out.println("");
-
-    }
+    
 }
 
 
 /*
-
- public static final String SERVER_NAME = "localhost";
-    public static final int SERVER_PORT = 33600;
-
-     public AppServer() {
-
-     }
-
-    public static void main(String[] args) {
-        
-        try { 
-            doRegistry(SERVER_PORT);            
-            ServerImpl server = new ServerImpl();
-
-            String url = "rmi://" + SERVER_NAME + ":" + SERVER_PORT + "/callback";
-            Naming.rebind(url, server);
-            System.out.println("Callback Server ready.");
-        } catch (Exception e) {
-            System.out.println("Exception in AppServer.main: " + e.toString());
-        } 
-    } // end main
-        
     private static void doRegistry(int serverPort) throws RemoteException{
         try {
             Registry registry = LocateRegistry.getRegistry();

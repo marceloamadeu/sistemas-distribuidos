@@ -1,8 +1,4 @@
-package br.edu.utfpr.app;
-
 import java.rmi.Remote;
-
-import br.edu.utfpr.app.entity.User;
 
 /**
  * First of all, let's create the interface for the remote object. 

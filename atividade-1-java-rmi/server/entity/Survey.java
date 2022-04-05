@@ -1,5 +1,3 @@
-package br.edu.utfpr.app.entity;
-
 import java.io.Serializable;
 
 public class Survey implements Serializable {

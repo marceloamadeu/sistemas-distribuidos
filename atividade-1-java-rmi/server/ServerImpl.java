@@ -1,15 +1,22 @@
-package br.edu.utfpr.app;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.utfpr.app.entity.User;
-
-
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
+
+
+    // Define color constants
+    public static final String TEXT_RESET = "\u001B[0m";
+    public static final String TEXT_BLACK = "\u001B[30m";
+    public static final String TEXT_RED = "\u001B[31m";
+    public static final String TEXT_GREEN = "\u001B[32m";
+    public static final String TEXT_YELLOW = "\u001B[33m";
+    public static final String TEXT_BLUE = "\u001B[34m";
+    public static final String TEXT_PURPLE = "\u001B[35m";
+    public static final String TEXT_CYAN = "\u001B[36m";
+    public static final String TEXT_WHITE = "\u001B[37m";
     //private Vector userList;   
     
     
@@ -17,11 +24,15 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     //private List<SurveyVote> surveyVotes = new ArrayList<>();
 
     private List<User> users = new ArrayList<>();
+    private List<String> serverInfoList = new ArrayList<>();
 
 
     protected ServerImpl() throws RemoteException {
         super();
         //userList = new Vector();
+        cleanRefreshPrintHeader();
+        serverInfoList.add(TEXT_GREEN + "[+] " + TEXT_RESET + "java RMI registry created");
+        serverInfoList.add(TEXT_GREEN + "[+] " + TEXT_RESET + "Server is ready");
     }
 
     @Override
@@ -48,10 +59,23 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         
         for (User user : users) {
                         
-            .notifyMe("Number of registered clients = " +  userList.size());                            
-        }
-                                        
+            //.notifyMe("Number of registered clients = " +  userList.size());                            
+        }                                  
       } 
+
+    /**
+     * Clean, refresh and print the console
+     */
+    public void cleanRefreshPrintHeader() {
+        // Limpa o console
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+        // Header
+        System.out.println("#####################################################");
+        System.out.println("####                  SERVIDOR                   ####");
+        System.out.println("#####################################################");
+        System.out.println("");
+    }
 
     /*
     @Override
