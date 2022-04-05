@@ -1,17 +1,5 @@
 package br.edu.utfpr.app;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.rmi.Naming;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-import br.edu.utfpr.app.entity.Survey;
-import br.edu.utfpr.app.entity.User;
-
 
 /**
  * Hello world!
@@ -22,6 +10,10 @@ public class AppClient {
 
     public static final String SERVER_NAME = "localhost";
     public static final int SERVER_PORT = 33600;
+
+    public static void main(String args[]) {
+
+    }
         
     
     
@@ -29,12 +21,14 @@ public class AppClient {
      * Menu com as opções disponíveis para teste
      * @param options
      */
+    /*
     public static void printMenu(String[] options){
         for (String option : options) {
             System.out.println(option);
         }
         System.out.print("Choose your option : ");
     }
+    */
 
 
     /**
@@ -47,13 +41,15 @@ public class AppClient {
      * cadastrada.
      * @param user
      */
+    /*
     public static void addUser(ServerInterface server, User user) {
         try {
-            server.addUser(user);
+            //server.addUser(user);
         } catch (RemoteException e) {
             System.out.println("User registration error: " + e.toString());
         }
     }
+    */
 
 
     /**
@@ -61,9 +57,10 @@ public class AppClient {
      * @param server
      * @param survey
      */
+    /*
     public static void addSurvey(ServerInterface server, Survey survey) {
         try {
-            server.addSurvey(survey);
+            //server.addSurvey(survey);
         } catch (RemoteException e) {
             System.out.println("Survey registration error: " + e.toString());
         }
@@ -71,7 +68,7 @@ public class AppClient {
 
     public static Survey findSurvey(ServerInterface server, String name, String title) {
         try {
-            return server.getSurvey(name, title);
+            //return server.getSurvey(name, title);
         } catch (RemoteException e) {
             System.out.println("Survey registration error: " + e.toString());
         }
@@ -105,11 +102,13 @@ public class AppClient {
 
             server.registerForCallback(callbackClientObj);
             System.out.println("Client Registered for callback.......: Ready");
-
+*/
             
             /**
              * Cadastro do Usuário
              */
+
+             /*
             System.out.println(" ");
             User user = new User();
 
@@ -123,9 +122,11 @@ public class AppClient {
             user.setRemoteObjectReference(bufferedReader.readLine());           
 
             addUser(server, user);
+            */
             //***************************************/
 
 
+            /*
 
             String[] options = {
                     "1 - Cadastro de Enquete",
@@ -205,4 +206,6 @@ public class AppClient {
             System.out.println("Exception in CallbackClient: " + e);            
         } 
       } 
+      */
+      
 }
