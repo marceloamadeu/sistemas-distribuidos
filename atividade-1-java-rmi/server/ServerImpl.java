@@ -2,6 +2,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
@@ -23,7 +24,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     //private List<Survey> surveys = new ArrayList<>();
     //private List<SurveyVote> surveyVotes = new ArrayList<>();
 
-    private List<User> users = new ArrayList<>();
+    private List<User> users = new Vector<>();
     private List<String> serverInfoList = new ArrayList<>();
 
 

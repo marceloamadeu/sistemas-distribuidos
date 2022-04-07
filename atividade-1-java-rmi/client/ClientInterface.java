@@ -4,5 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface ClientInterface extends Remote {
-    public String notifyMe(String message) throws RemoteException;
+    String ping(String message) throws RemoteException;    
+    String notifyChanges(String message) throws RemoteException;
 }

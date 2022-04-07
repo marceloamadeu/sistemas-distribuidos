@@ -5,19 +5,49 @@ package br.edu.utfpr.app;
  * Hello world!
  *
  */
-public class AppClient {
+public class MainClientApp implements RemoteClient {
 
 
     public static final String SERVER_NAME = "localhost";
     public static final int SERVER_PORT = 33600;
 
-    public static void main(String args[]) {
+    
+    
 
-    }
-        
+    
+
     
     
-    /**
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+            /**
      * Menu com as opções disponíveis para teste
      * @param options
      */
