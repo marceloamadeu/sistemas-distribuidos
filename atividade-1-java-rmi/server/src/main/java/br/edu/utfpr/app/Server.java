@@ -8,3 +8,6 @@ public interface Server extends Remote {
     public void register(Client client) throws RemoteException;
     public void unregister(Client client) throws RemoteException;
 }
+
+
+https://github.com/rcmccartney/pubsub
