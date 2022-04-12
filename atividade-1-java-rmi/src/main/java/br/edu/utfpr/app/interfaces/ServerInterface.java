@@ -19,7 +19,7 @@ public interface ServerInterface extends java.rmi.Remote {
 	 * @return unique int ID of this client for the Server to track
 	 * @throws RemoteException if server is offline
 	 */
-	public int sayHello(Subscriber sub) throws RemoteException;
+	public int sayHello(SubscriberInterface sub) throws RemoteException;
 	
 	/**
 	 * This method re-establishes the relationship between server and client
@@ -29,7 +29,7 @@ public interface ServerInterface extends java.rmi.Remote {
 	 * @return same ID this client had previously
 	 * @throws RemoteException if server is offline
 	 */
-	public int sayHello(Integer ID, Subscriber sub) throws RemoteException;
+	public int sayHello(Integer ID, SubscriberInterface sub) throws RemoteException;
 
 	/**
 	 * Publishes advertises a new topic
@@ -49,6 +49,15 @@ public interface ServerInterface extends java.rmi.Remote {
 	 * @throws RemoteException
 	 */
 	public boolean addSubscriber(Integer subscriber, Enquete enquete) throws RemoteException;
+
+	/**
+	 * User unsubscribes from all topics and keywords
+	 * 
+	 * @param subID unique subscriber ID of the client 
+	 * @return  boolean if user was successfully removed from all topics and keywords
+	 * @throws RemoteException
+	 */
+	public boolean removeSubscriber(Integer subscriber) throws RemoteException;
 		
 	/**
 	 * User unsubscribes from a given topic 
@@ -101,5 +110,5 @@ public interface ServerInterface extends java.rmi.Remote {
 	 * @return Subscriber object
 	 * @throws RemoteException
 	 */
-	public Subscriber getSubscriber(Integer subscriber) throws RemoteException;
+	public SubscriberInterface getSubscriber(Integer subscriber) throws RemoteException;
 }

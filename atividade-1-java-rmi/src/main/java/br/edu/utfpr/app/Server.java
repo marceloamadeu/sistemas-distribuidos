@@ -18,12 +18,13 @@ public class Server {
 	private int port = 33600;
 	private String hostName = "localhost";
 	private ServerImpl manager = null;
+	private Util util = new Util();
 	
 	/**
 	 * Constructor that makes a new ServerImpl and loads pre-built Topics
 	 * @param args command-line arguments for hostname and port
 	 */
-	public Server(String[] args) {		
+	public Server() {		
     	try {    		
 			// Bind the remote object's stub in the registry
             LocateRegistry.createRegistry(port);  
@@ -31,9 +32,8 @@ public class Server {
     		Naming.rebind("//" + hostName + ":" + port + "/Enquete", manager);
             System.out.println("ServerImpl bound in registry at " + hostName + ":" + port);
             manager.startService();
-		} catch (Exception e) {
-			System.out.println( "ServerImpl error");
-			System.out.println( "Did you run 'rmiregistry [port] &' first then 'java EventServer [-p <port>]'?" );
+		} catch (Exception e) {						
+			System.out.println(util.TEXT_RED + "[-] " + util.TEXT_RESET + "RemoteException in MainServerApp.main: " + e.toString());
 			System.exit(1);
 		}
 	}
@@ -43,7 +43,7 @@ public class Server {
 	 * @throws RemoteException 
 	 */
 	public static void main(String[] args) throws RemoteException {
-		Server server = new Server(args);
+		Server server = new Server();
 		server.manager.commandLineInterface();
 	}
 }

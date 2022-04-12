@@ -8,7 +8,7 @@ import br.edu.utfpr.app.entity.Enquete;
  * @author rob mccartney
  *
  */
-public interface Publisher {
+public interface PublisherInterface {
 	
 	/**
 	 * Publish an event of a specific topic with title, content, and optional keywords for content filtering

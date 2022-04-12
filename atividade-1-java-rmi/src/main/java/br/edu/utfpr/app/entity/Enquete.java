@@ -9,7 +9,7 @@ public class Enquete implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private int id = 0;
     private String nome;
     private String titulo;
     private String local;
@@ -27,7 +27,8 @@ public class Enquete implements Serializable {
         this.titulo = titulo;
         this.local = local;
         this.tempo = tempo;
-        this.dataFinalEnquete = dataFinalEnquete;        
+        this.dataFinalEnquete = dataFinalEnquete;    
+        toBeNotified = new LinkedHashSet<>();    
     }
 
 
@@ -35,8 +36,9 @@ public class Enquete implements Serializable {
         return this.id;
     }
 
-    public void setId(int id) {
+    public Enquete setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getNome() {
@@ -94,6 +96,13 @@ public class Enquete implements Serializable {
 	 */
 	public synchronized int notifySize() {
 		return toBeNotified.size();
+    }
+    
+    /**
+	 * Must override the regular hashCode in order to hash Events to collide with duplicates
+	 */
+	public int hashCode() {
+		return nome.hashCode() + titulo.hashCode();
 	}
 
     /**

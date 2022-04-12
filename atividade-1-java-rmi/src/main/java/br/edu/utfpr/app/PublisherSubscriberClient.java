@@ -19,23 +19,23 @@ import br.edu.utfpr.app.interfaces.ServerInterface;
  * @author rob mccartney
  *
  */
-public class PubSubClient {
+public class PublisherSubscriberClient {
 
 	private String hostName = "localhost"; 
     private int port = 33600;
-    private PubSubServer agent = null;
+    private PublisherSubscriberServer agent = null;
     
     /**
      * Constructor that makes a new agent or loads a previously saved one
      * 
      * @param args String[] from the command line
      */
-    public PubSubClient(String[] args) {    	
+    public PublisherSubscriberClient() {    	
     	try {    		
     		if (agent == null) {
     			ServerInterface server = (ServerInterface) Naming.lookup("//" + hostName + ":" + port + "/Enquete");
     			System.out.println("Connected to server at " + hostName + ":" + port );
-    			agent = new PubSubServer(server);
+    			agent = new PublisherSubscriberServer(server);
     		}
 		} catch (Exception e) {
 			System.out.println("Cannot connect to the Event Manager server at this time.  Please try again later.");
@@ -52,10 +52,10 @@ public class PubSubClient {
      * @param args command-line arguments for port and hostname
      * @param agent that will be communicating with the Event server
      */
-    public PubSubClient(String[] args, PubSubServer agent) {
+    public PublisherSubscriberClient(PublisherSubscriberServer agent) {
     	
     	try {
-		ServerInterface server = (ServerInterface) Naming.lookup("//" + hostName + ":" + port + "/EventManager");
+			ServerInterface server = (ServerInterface) Naming.lookup("//" + hostName + ":" + port + "/EventManager");
     		System.out.println("Connected to server at " + hostName + ":" + port );
     		agent.setServer(server);
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class PubSubClient {
 	 * @throws RemoteException 
 	 */
 	public static void main(String[] args) throws RemoteException {
-		PubSubClient client = new PubSubClient(args);
+		PublisherSubscriberClient client = new PublisherSubscriberClient();
 		client.agent.commandLineInterface();
 	}
 }

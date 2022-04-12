@@ -1,10 +1,10 @@
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/ServerImpl.java
-/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/interfaces/Publisher.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/Util.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/interfaces/ServerInterface.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/interfaces/PublisherInterface.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/entity/Enquete.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/PublisherSubscriberServer.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/EnqueteContainer.java
-/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/PubSubServer.java
-/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/App.java
-/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/PubSubClient.java
-/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/interfaces/Subscriber.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/PublisherSubscriberClient.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/Server.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/app/interfaces/SubscriberInterface.java

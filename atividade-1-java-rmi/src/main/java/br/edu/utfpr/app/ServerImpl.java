@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 import br.edu.utfpr.app.entity.Enquete;
 import br.edu.utfpr.app.interfaces.ServerInterface;
-import br.edu.utfpr.app.interfaces.Subscriber;
+import br.edu.utfpr.app.interfaces.SubscriberInterface;
 /**
  * This class is the server that all publishers and subscribers work through for asynchronous message passing.
  * 
@@ -44,7 +44,9 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 	// Maps from the ID of a client to the actual RMI object of the client 
 	// This allows the client to leave and come back later without 
 	//changing the unique identifier
-	protected HashMap<Integer, Subscriber> clientBinding;
+	protected HashMap<Integer, SubscriberInterface> clientBinding;
+
+	public Util util;
 
 	/**
 	 * Constructor
@@ -58,6 +60,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 		clientBinding = new HashMap<>();
 		if (preload)
 			this.loadPrebuiltTopics();
+
+		util = new Util();
 	}
 	
 	/**
@@ -90,7 +94,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 	/**
 	 * see interface javadoc
 	 */
-	public int sayHello(Subscriber sub) throws RemoteException {
+	public int sayHello(SubscriberInterface sub) throws RemoteException {
 		synchronized (clientBinding) {
 			clientBinding.put(++subscriberId, sub);
 			return subscriberId;
@@ -100,7 +104,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 	/**
 	 * see interface javadoc
 	 */
-	public int sayHello(Integer id, Subscriber subscriber) throws RemoteException {
+	public int sayHello(Integer id, SubscriberInterface subscriber) throws RemoteException {
 		synchronized (clientBinding) {
 			clientBinding.put(id, subscriber);
 			return id;
@@ -124,7 +128,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 		}
 	}
 	
-	public Subscriber getSubscriber(Integer id) {
+	public SubscriberInterface getSubscriber(Integer id) {
 		return clientBinding.get(id);
 	}
 	
@@ -239,6 +243,15 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 		}
 		return false;
 	}
+
+	/**
+	 * see interface javadoc
+	 */
+	public boolean removeSubscriber(Integer subscriber) throws RemoteException {
+		for( EnqueteContainer tc : allEnqueteContainers)
+			tc.removeSubscriber(subscriber);						
+		return true;
+	}
 	
 	/**
 	 * see interface javadoc
@@ -246,8 +259,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 	public ArrayList<Enquete> getEnquetes() {
 		synchronized (allEnqueteContainers) {
 			ArrayList<Enquete> enquetes = new ArrayList<>();
-			for (EnqueteContainer tc : allEnqueteContainers)
-				enquetes.add( tc.getEnquete() );
+			for (EnqueteContainer enqueteContainer : allEnqueteContainers)
+				enquetes.add(enqueteContainer.getEnquete());
 			return enquetes;
 		}
 	}
@@ -267,11 +280,15 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 	public void commandLineInterface() throws RemoteException {
 		Scanner in = new Scanner(System.in);
 		do {
-			System.out.println("What would you like to do? Enter choice [1-3]:");
-			System.out.println(" 1: Show topics");
-			System.out.println(" 2: Show subscribers");
-			System.out.println(" 3: Quit server");
-			System.out.print("> ");
+			// Limpar o console e mostrar as opções do menu
+			util.cleanRefreshPrintServerHeader();	
+			System.out.println("Menu - Selecione uma das opções:");		
+			System.out.println(" ");
+			System.out.println(util.TEXT_GREEN + " [ 1 ] " + util.TEXT_RESET + "Listar Enquetes");
+			System.out.println(util.TEXT_GREEN + " [ 2 ] " + util.TEXT_RESET + "Listar Subscribers");
+			System.out.println(util.TEXT_GREEN + " [ 9 ] " + util.TEXT_RESET + "Sair");
+			System.out.println(" ");
+			System.out.print("Digite o número [1 - 9]: ");
 			int choice = -1;
 			try {
 				choice = in.nextInt(); in.nextLine();
@@ -282,7 +299,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 						System.out.print( tc.getEnquete() );
 					break;
 				//case 2: showSubscribers(); break;
-				case 3: in.close(); System.exit(0); 
+				case 9: in.close(); System.exit(0); 
 				default: System.out.println("Input not recognized");
 			}
 		} while (true);
@@ -290,29 +307,29 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
 	@Override
 	public int publish(Enquete enquete) throws RemoteException {
-		// if (enquete.getId() != 0) {
-		// 	System.err.println("Enquete has already been published.");
-		// 	return 0;
-		// }
-		// synchronized (allEnqueteContainers) {
-		// 	for( EnqueteContainer tc : allEnqueteContainers) {
-		// 		//if (tc.getEnquete().getId() == enquete.getEnquete().getId() ) {
-		// 		if (tc.getEnquete().getId() == enquete.getId() ) {
-
-		// 			enquete.setId(++enqueteId).addSubscriberList(tc.getSubscribers());
-		// 			for(String key : enquete.getKeywords() )
-		// 			enquete.addSubscriberList( contentFilter.get(key) );
-		// 			//if (notifySubscribers(enquete) > 0) {
-		// 				synchronized (pendingEnquetes) {
-		// 					pendingEnquetes.add(enquete);
-		// 					pendingEnquetes.notifyAll();
-		// 				}
-		// 			//}
-		// 			return enqueteId;
-		// 		}
-		// 	}
-		// }
-		// System.err.println("Enquete topic not found.");
+		 if (enquete.getId() != 0) {
+		 	System.err.println("Enquete has already been published.");
+		 	return 0;
+		 }
+		 synchronized (allEnqueteContainers) {
+		 	for( EnqueteContainer tc : allEnqueteContainers) {
+		 		if (tc.getEnquete().getId() == enquete.getId() ) {		 		
+		 			enquete.setId(++enqueteId).addSubscriberList(tc.getSubscribers());
+					 
+					//for(String key : enquete.getKeywords() )
+		 			//	enquete.addSubscriberList(contentFilter.get(key));
+					 
+					if (notifySubscribers(enquete) > 0) {
+		 				synchronized (pendingEnquetes) {
+		 					pendingEnquetes.add(enquete);
+		 					pendingEnquetes.notifyAll();
+		 				}
+		 			}
+		 			return enqueteId;
+		 		}
+		 	}
+		 }
+		 System.err.println("Enquete topic not found.");
 		return 0;
 	}
 	
@@ -320,12 +337,10 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 	 * show the complete list of subscribers, used by server for command line printing
 	 * Prints both all the subscribers to each topic and all the subscribers to each 
 	 * keyword
-	 */
-	/*
+	 */	
 	public void showSubscribers() throws RemoteException {
 		for( EnqueteContainer tc : allEnqueteContainers) 
-			System.out.print("Topic: " +tc.getTopic().getName()+ "\n" +
-							 "\tSubscribers: " + tc.printSubscribers());
+			System.out.print("Topic: " +tc.getEnquete().getNome());
 		String contentPrint = "";
 		for( String key : contentFilter.keySet() ) {
 			contentPrint += "Keyword: " + key + "\n\tSubscribers: ";
@@ -336,6 +351,5 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 				contentPrint += "Agent_" + subID + ((--i > 0)?",":"\n");
 		}
 		System.out.print(contentPrint);
-	}
-	*/
+	}	
 }

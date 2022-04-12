@@ -13,7 +13,7 @@ import br.edu.utfpr.app.entity.Enquete;
  * @author rob mccartney
  *
  */
-public interface Subscriber extends java.rmi.Remote {
+public interface SubscriberInterface extends java.rmi.Remote {
 	
 	/**
 	 * Subscribe to a topic
@@ -29,7 +29,7 @@ public interface Subscriber extends java.rmi.Remote {
 	 * @param keyword the keyword to subscribe to with content filtering
 	 * @throws RemoteException
 	 */
-	public void subscribe(String keyword) throws RemoteException;
+	//public void subscribe(String keyword) throws RemoteException;
 	
 	/**
 	 * Unsubscribe from a topic 
