@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="atividade-1-java-rmi" target="11" />
+      <module name="client" target="1.5" />
+      <module name="comum" target="1.5" />
+      <module name="server" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

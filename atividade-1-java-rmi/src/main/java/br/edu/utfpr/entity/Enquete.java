@@ -1,4 +1,4 @@
-package br.edu.utfpr.app.entity;
+package br.edu.utfpr.app.comum.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
