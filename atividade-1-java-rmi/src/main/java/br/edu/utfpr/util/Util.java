@@ -13,6 +13,9 @@ public class Util {
     public static final String TEXT_CYAN = "\u001B[36m";
     public static final String TEXT_WHITE = "\u001B[37m";
 
+    private static final int PORT = 33600;
+    private static final String HOSTNAME = "localhost";
+
     public Util() {
 
     }

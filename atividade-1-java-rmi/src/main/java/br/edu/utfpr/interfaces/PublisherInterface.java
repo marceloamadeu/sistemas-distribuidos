@@ -1,6 +1,6 @@
 package br.edu.utfpr.interfaces;
 
-import br.edu.utfpr.app.comum.entity.Enquete;
+import br.edu.utfpr.entity.Enquete;
 
 /**
  * This interface is the methods available to a Publisher within the pub-sub system
@@ -13,7 +13,7 @@ public interface PublisherInterface {
 	/**
 	 * Publish an event of a specific topic with title, content, and optional keywords for content filtering
 	 * 
-	 * @param enqueter to be published
+	 * @param enquete to be published
 	 */
 	public void publish(Enquete enquete);
 

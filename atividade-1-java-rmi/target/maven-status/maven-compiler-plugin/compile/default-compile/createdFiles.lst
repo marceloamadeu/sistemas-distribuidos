@@ -1,10 +1,11 @@
 br/edu/utfpr/interfaces/SubscriberInterface.class
-br/edu/utfpr/app/comum/entity/Enquete.class
-br/edu/utfpr/server/ServerMain.class
+br/edu/utfpr/entity/Usuario.class
 br/edu/utfpr/util/Util.class
-br/edu/utfpr/client/ClientMain.class
 br/edu/utfpr/client/ClientImpl.class
+br/edu/utfpr/client/Client.class
 br/edu/utfpr/server/ServerImpl.class
 br/edu/utfpr/interfaces/PublisherInterface.class
+br/edu/utfpr/entity/Enquete.class
 br/edu/utfpr/interfaces/ServerInterface.class
 br/edu/utfpr/interfaces/ClientInterface.class
+br/edu/utfpr/server/Server.class

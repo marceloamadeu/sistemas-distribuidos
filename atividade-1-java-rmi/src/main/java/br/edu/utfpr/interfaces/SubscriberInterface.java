@@ -2,7 +2,7 @@ package br.edu.utfpr.interfaces;
 
 import java.rmi.RemoteException;
 
-import br.edu.utfpr.app.comum.entity.Enquete;
+import br.edu.utfpr.entity.Enquete;
 
 /**
  * These are the methods available for the Subscriber in the pub-sub system.  They extend 

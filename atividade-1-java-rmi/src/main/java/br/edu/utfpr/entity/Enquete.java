@@ -1,4 +1,4 @@
-package br.edu.utfpr.app.comum.entity;
+package br.edu.utfpr.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -15,8 +15,6 @@ public class Enquete implements Serializable {
     private String local;
     private String tempo;
     private String dataFinalEnquete;
-    private LinkedHashSet<Integer> toBeNotified;
-
 
 
     public Enquete() {
@@ -27,8 +25,7 @@ public class Enquete implements Serializable {
         this.titulo = titulo;
         this.local = local;
         this.tempo = tempo;
-        this.dataFinalEnquete = dataFinalEnquete;    
-        toBeNotified = new LinkedHashSet<>();    
+        this.dataFinalEnquete = dataFinalEnquete;
     }
 
 
@@ -81,39 +78,4 @@ public class Enquete implements Serializable {
         this.dataFinalEnquete = dataFinalEnquete;
     }
 
-
-    /**
-	 * 
-	 * @return iterator to allow for removal of Subscribers as they are notified one by one about this event
-	 */
-	public synchronized Iterator<Integer> iterator() {
-		return toBeNotified.iterator();
-	}
-
-	/**
-	 * 
-	 * @return number of users left to notify
-	 */
-	public synchronized int notifySize() {
-		return toBeNotified.size();
-    }
-    
-    /**
-	 * Must override the regular hashCode in order to hash Events to collide with duplicates
-	 */
-	public int hashCode() {
-		return nome.hashCode() + titulo.hashCode();
-	}
-
-    /**
-	 * 
-	 * @param c some other list of subscribers (either content or topic filtering) to be added to the 
-	 * list of subscribers of this event
-	 * @return true/false that the list was successfully added
-	 */
-	public synchronized boolean addSubscriberList(Collection<Integer> c) {
-		if (c != null)
-			return toBeNotified.addAll(c);
-		return false;
-	}
 }
