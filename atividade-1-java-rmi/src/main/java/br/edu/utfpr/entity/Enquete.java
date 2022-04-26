@@ -9,7 +9,7 @@ public class Enquete implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int id = 0;
+    private int id;
     private String nome;
     private String titulo;
     private String local;

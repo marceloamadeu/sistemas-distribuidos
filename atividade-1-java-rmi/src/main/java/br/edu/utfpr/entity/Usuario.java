@@ -11,7 +11,7 @@ public class Usuario implements Serializable {
 
     private int id;
     private String nome;
-    private String chavePublica;
+    private int chavePublica;
     private String referenciaObjetoRemoto;
     private ClientInterface client;
 
@@ -19,7 +19,7 @@ public class Usuario implements Serializable {
 
     }
 
-    public Usuario(int id, String nome, String chavePublica, String referenciaObjetoRemoto, ClientInterface client) {
+    public Usuario(int id, String nome, int chavePublica, String referenciaObjetoRemoto, ClientInterface client) {
         this.id = id;
         this.nome = nome;
         this.chavePublica = chavePublica;
@@ -35,11 +35,11 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public String getChavePublica() {
+    public int getChavePublica() {
         return chavePublica;
     }
 
-    public void setChavePublica(String chavePublica) {
+    public void setChavePublica(int chavePublica) {
         this.chavePublica = chavePublica;
     }
 

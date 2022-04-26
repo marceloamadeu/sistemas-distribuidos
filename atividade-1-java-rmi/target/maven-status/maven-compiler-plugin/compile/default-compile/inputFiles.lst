@@ -4,6 +4,7 @@
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/server/ServerImpl.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/interfaces/ServerInterface.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/server/Server.java
+/home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/util/EnqueteContainer.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/entity/Enquete.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/interfaces/PublisherInterface.java
 /home/marcelo/dev/mestrado/sistemas-distribuidos/atividade-1-java-rmi/src/main/java/br/edu/utfpr/client/ClientImpl.java

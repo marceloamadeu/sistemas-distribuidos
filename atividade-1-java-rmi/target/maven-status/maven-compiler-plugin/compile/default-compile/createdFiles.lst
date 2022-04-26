@@ -1,6 +1,7 @@
 br/edu/utfpr/interfaces/SubscriberInterface.class
 br/edu/utfpr/entity/Usuario.class
 br/edu/utfpr/util/Util.class
+br/edu/utfpr/util/EnqueteContainer.class
 br/edu/utfpr/client/ClientImpl.class
 br/edu/utfpr/client/Client.class
 br/edu/utfpr/server/ServerImpl.class

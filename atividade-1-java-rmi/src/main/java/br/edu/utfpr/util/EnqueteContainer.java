@@ -6,17 +6,17 @@ import br.edu.utfpr.entity.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Container {
+public class EnqueteContainer {
 
     private Enquete enquete;
     private List<Usuario> usersList;
 
-    public Container() {
+    public EnqueteContainer() {
         enquete = new Enquete();
         usersList = new ArrayList<>();
     }
 
-    public Container(Enquete enquete) {
+    public EnqueteContainer(Enquete enquete) {
         this.enquete = enquete;
     }
 
