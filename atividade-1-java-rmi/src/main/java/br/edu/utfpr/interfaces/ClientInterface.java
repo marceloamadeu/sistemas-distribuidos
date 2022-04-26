@@ -1,6 +1,9 @@
 package br.edu.utfpr.interfaces;
 
-import java.rmi.*;
+import br.edu.utfpr.entity.Enquete;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * This is a remote interface for illustrating RMI 
@@ -8,15 +11,25 @@ import java.rmi.*;
  * @author M. L. Liu
  */
 
-public interface ClientInterface
-  extends java.rmi.Remote{
-  // This remote method is invoked by a callback
-  // server to make a callback to an client which
-  // implements this interface.
-  // @param message - a string containing information for the
-  //                  client to process upon being called back.
+public interface ClientInterface extends Remote {
 
-    public String notifyMe(String message) 
-      throws java.rmi.RemoteException;
 
-} // end interface
+    public String notifyMe(String message)  throws java.rmi.RemoteException;
+
+    /**
+     * Se inscrever / acompanhar Enquete
+     *
+     * @param enquete
+     * @throws RemoteException
+     */
+    public void subscribe(Enquete enquete) throws RemoteException;
+
+    /**
+     * Enviar notificação os usuários inscritos na enquete
+     *
+     * @param enquete
+     * @throws RemoteException
+     */
+    public void notify(Enquete enquete) throws RemoteException;
+
+}

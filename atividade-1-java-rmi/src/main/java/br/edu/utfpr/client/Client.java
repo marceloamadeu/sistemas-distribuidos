@@ -25,7 +25,7 @@ public class Client {
       server.register(client);
 
       nameMenu(server, client);
-      server.unregister(client);
+
       System.out.println("Unregistered for callback.");
     } // end try 
     catch (Exception e) {
@@ -86,7 +86,7 @@ public class Client {
       System.out.println(" ");
       System.out.println(util.TEXT_YELLOW + "Bem-Vindo ao sistema de Agendamento de Reuniões (Enquetes)!!!" + util.TEXT_RESET);
       System.out.println(" ");
-      System.out.println("Servidor   " +  util.TEXT_RESET + HOSTNAME + ":" + PORT + " - " + util.TEXT_GREEN + "online" + util.TEXT_RESET );
+      System.out.println(util.TEXT_RESET + HOSTNAME + ":" + PORT + " - " + util.TEXT_GREEN + "online" + util.TEXT_RESET );
       // Menu
       System.out.println(" ");
       System.out.println("Menu - Selecione uma das opções:");
@@ -109,7 +109,10 @@ public class Client {
           clientMainMenu();
 
           break;
-        case 9: in.close(); System.exit(0);
+        case 9:
+          in.close();
+          System.exit(0);
+          server.unregister(client);
         default: System.out.println("Opção não encontrada!!!");
       }
     } while (true);
