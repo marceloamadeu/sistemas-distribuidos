@@ -16,7 +16,6 @@ public class Enquete implements Serializable {
     private String tempo;
     private String dataFinalEnquete;
 
-
     public Enquete() {
     }
 

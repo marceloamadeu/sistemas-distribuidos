@@ -6,11 +6,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * This is a remote interface for illustrating RMI 
- * client callback.
- * @author M. L. Liu
+ * Client interface RMI - extends Remote
  */
-
 public interface ClientInterface extends Remote {
 
 

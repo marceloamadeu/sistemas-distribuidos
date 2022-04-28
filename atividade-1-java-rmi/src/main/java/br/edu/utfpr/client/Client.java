@@ -1,5 +1,6 @@
 package br.edu.utfpr.client;
 
+import br.edu.utfpr.entity.Enquete;
 import br.edu.utfpr.entity.Usuario;
 import br.edu.utfpr.interfaces.ClientInterface;
 import br.edu.utfpr.interfaces.ServerInterface;
@@ -7,6 +8,7 @@ import br.edu.utfpr.util.Util;
 
 import java.io.*;
 import java.rmi.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
@@ -22,24 +24,16 @@ public class Client {
       BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
       user = new Usuario();
 
-
       ServerInterface server = (ServerInterface) Naming.lookup("rmi://localhost:" + PORT + "/callback");
-      ClientInterface client = new ClientImpl();
-
+      ClientInterface client = new ClientImpl(server);
       server.register(client);
-
       nameMenu(user, server, client);
 
       System.out.println("Unregistered for callback.");
-    } // end try 
-    catch (Exception e) {
+    }catch (Exception e) {
       System.out.println("Exception in CallbackClient: " + e);
-    } // end catch
-  } //end main
-
-
-
-
+    }
+  }
 
   //=====================================================
   //                  MENU - CLIENTE
@@ -64,8 +58,13 @@ public class Client {
       } catch (Exception e) { in.nextLine(); }
       switch (choice) {
         case 1:
-          //for (EnqueteContainer tc : allEnqueteContainers)
-          //    System.out.print( tc.getEnquete() );
+
+          clientMainMenu(user, server, client);
+          List<Enquete> enquetes = new getEnquetes();
+          for (Enquete enquete : enquetes) {
+            System.out.println(enquete.getNome());
+          }
+
           break;
         case 2:
           System.out.print("Digite o nome da enquete: ");
@@ -124,7 +123,7 @@ public class Client {
           System.out.print("Digite seu nome: ");
           String nome = in.nextLine();
           user = server.addUser(nome, client);
-          clientMainMenu(server, client);
+          clientMainMenu(user, server, client);
           break;
         case 9:
           in.close();
@@ -134,11 +133,4 @@ public class Client {
       }
     } while (true);
   }
-
-
-
-
-
-
-
 }//end class

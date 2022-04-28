@@ -20,11 +20,17 @@ public class Server {
   public static void main(String args[]) {
     InputStreamReader is = new InputStreamReader(System.in);
     BufferedReader br = new BufferedReader(is);
+    Registry referenciaServicoNomes = null;
 
     try{
-      startRegistry(PORT);
+      //Referência do serviço de nomes
+      referenciaServicoNomes = startRegistry(PORT);
+      //startRegistry(PORT);
       ServerImpl exportedObj = new ServerImpl();
-      Naming.rebind("rmi://localhost:" + PORT + "/callback", exportedObj);
+
+      Naming.rebind("rmi://" + HOSTNAME + ":" + PORT + "/callback", exportedObj);
+      //referenciaServicoNomes.rebind("rmi://" + HOSTNAME + ":" + PORT + "/callback", exportedObj);
+
       System.out.println("Callback Server ready.");
     }
     catch (Exception re) {
@@ -32,14 +38,25 @@ public class Server {
     }
   }
 
-  private static void startRegistry(int RMIPortNum)
-    throws RemoteException{
+  /**
+   * Método usado para registrar/acessar o serviço de nomes Java RMI
+   *
+   * Para usar a classe LocalRegistry foi criado duas classes distintas.
+   * Uma como servidor e a outra cliente.
+   * Também está sendo usado um pacote com o mesmo nome: br.edu.utfpr
+   *
+   * @param port
+   * @throws RemoteException
+   */
+  private static Registry startRegistry(int port) throws RemoteException{
+    Registry registry = null;
     try {
-      Registry registry = LocateRegistry.getRegistry(RMIPortNum);
-      registry.list( );
+      registry = LocateRegistry.getRegistry(port);
+      registry.list();
     } catch (RemoteException e) {
-      Registry registry = LocateRegistry.createRegistry(RMIPortNum);
+      registry = LocateRegistry.createRegistry(port);
     }
+    return registry;
   }
 
 }

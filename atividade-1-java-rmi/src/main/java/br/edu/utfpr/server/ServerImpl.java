@@ -13,16 +13,26 @@ import java.rmi.server.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A classe servente do servidor que é usada para implementar todos os
+ * métodos definidos na interface.
+ *
+ * extends UnicastRemoteObject - Used for exporting a remote object with
+ * JRMP and obtaining a stub that communicates to the remote object.
+ *
+ * implements - ServerInterface
+ */
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
    protected List<EnqueteContainer> containerList;
    protected List<ClientInterface> clientList;
    protected List<Usuario> userList;
-    protected List<Enquete> enqueteList;
+   protected List<Enquete> enqueteList;
    protected int userId;
    protected Util util = null;
    protected Enquete enquete = null;
    protected EnqueteContainer container = null;
+
 
    public ServerImpl() throws RemoteException {
        super();
@@ -34,7 +44,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
        userId = 0;
    }
 
-  @Override
+    @Override
+    public void registrarInteresse(String texto, ClientInterface client) throws RemoteException {
+
+    }
+
+    @Override
   public String sayHello() throws RemoteException {
     return "hello";
   }
@@ -133,9 +148,13 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
             container.setEnquete(enquete);
             container.getUsersList().add(user);
             containerList.add(container);
-            
+
             logServer();
         }
+    }
+
+    public List<Enquete> getEnquetes() {
+        return enqueteList;
     }
 
 
@@ -162,12 +181,20 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
             if (enqueteList.size() > 0) {
                 System.out.println(" ");
-                System.out.println(util.TEXT_GREEN + "Lista de Enquetes Registradas" + util.TEXT_RESET);
+                System.out.println(util.TEXT_YELLOW + "Lista de Enquetes Registradas" + util.TEXT_RESET);
                 System.out.println(" ");
                 for (Enquete enquete : enqueteList) {
-                    System.out.println(util.TEXT_GREEN + "Enquete: " + util.TEXT_RESET + enquete.getNome());
+                    System.out.println(util.TEXT_GREEN + "Enquete: " + util.TEXT_RESET + enquete.getNome() +
+                            util.TEXT_GREEN + "  Titulo: " + util.TEXT_RESET + enquete.getTitulo() +
+                            util.TEXT_GREEN + "  Local: " + util.TEXT_RESET + enquete.getLocal() +
+                            util.TEXT_GREEN + "  Tempo: " + util.TEXT_RESET + enquete.getTempo() +
+                            util.TEXT_GREEN + "  Fim da Enquete: " + util.TEXT_RESET + enquete.getDataFinalEnquete()
+                    );
                 }
+            } else {
+                System.out.println(util.TEXT_YELLOW + "Nenhuma enquete cadastrada no servidor!!!" + util.TEXT_RESET);
             }
+
         }
     }
 }
