@@ -42,6 +42,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
        enqueteList = new ArrayList<>();
        util = new Util();
        userId = 0;
+       logServer();
    }
 
     @Override
@@ -50,9 +51,9 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
-  public String sayHello() throws RemoteException {
-    return "hello";
-  }
+    public String sayHello() throws RemoteException {
+        return "hello";
+    }
 
     /**
      * Método usado pelos clients para registro / callback
@@ -70,7 +71,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     synchronized(clientList) {
         if (!(clientList.contains(client))) {
             clientList.add(client);
-            System.out.println("Registered new client OK");
+            logServer();
             doCallbacks();
         }
     }
@@ -158,12 +159,17 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     }
 
 
-
-    private synchronized void doCallbacks( ) throws RemoteException {
-       for (ClientInterface client : clientList) {
-           client.notifyMe("Cliente Registrado. Usuário: " +  clientList.size());
-       }
-       System.out.println("********************************\n" + "Server completed callbacks ---");
+    /**
+     * Método usado para notificar os clientes do servidor
+     *
+     * Ex: quando for cadastrada uma enquete ou quando um
+     * novo cliente estiver disponivel no servidor
+     *
+     */
+    private synchronized void doCallbacks() throws RemoteException {
+        for (Usuario user : userList) {
+            user.getClient().notifyMe(user.getNome() + " conectado(a) ao servidor!!!");
+        }
     }
 
     /**
@@ -172,16 +178,35 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     private void logServer() {
         synchronized (userList) {
             util.cleanRefreshPrintServerHeader();
-            for (Usuario user : userList) {
-                System.out.println(util.TEXT_GREEN + "Id: " + util.TEXT_RESET + user.getId() +
-                        util.TEXT_GREEN + "   Usuário: " + util.TEXT_RESET + user.getNome() +
-                        util.TEXT_GREEN + " Chave Pública: " + util.TEXT_RESET +  user.getChavePublica() +
-                        util.TEXT_GREEN + " Status: " +  util.TEXT_RESET + "Registrado/Online");
+            System.out.println(" ");
+
+            // Lista de Usuarios / Clientes
+            if (clientList.size() > 0) {
+                System.out.println(util.TEXT_YELLOW + "* Quantidade de Clientes no servidor: " + util.TEXT_RESET + clientList.size());
+            } else {
+                System.out.println(util.TEXT_YELLOW + "- Nenhum cliente registrado no servidor!!!" + util.TEXT_RESET);
             }
 
+            // Lista de Usuarios / Clientes
+            if (userList.size() > 0) {
+                System.out.println(" ");
+                System.out.println(util.TEXT_YELLOW + "* Lista de Usuários / Clientes Cadastrados" + util.TEXT_RESET);
+                System.out.println(" ");
+                for (Usuario user : userList) {
+                    System.out.println(util.TEXT_GREEN + "Id: " + util.TEXT_RESET + user.getId() +
+                            util.TEXT_GREEN + "   Usuário: " + util.TEXT_RESET + user.getNome() +
+                            util.TEXT_GREEN + " Chave Pública: " + util.TEXT_RESET +  user.getChavePublica() +
+                            util.TEXT_GREEN + " Status: " +  util.TEXT_RESET + "Registrado/Online");
+                }
+            } else {
+                System.out.println(" ");
+                System.out.println(util.TEXT_YELLOW + "- Nenhum usuário cadastrado no servidor!!!" + util.TEXT_RESET);
+            }
+
+            // Lista de Enquetes
             if (enqueteList.size() > 0) {
                 System.out.println(" ");
-                System.out.println(util.TEXT_YELLOW + "Lista de Enquetes Registradas" + util.TEXT_RESET);
+                System.out.println(util.TEXT_YELLOW + "* Lista de Enquetes Cadastradas" + util.TEXT_RESET);
                 System.out.println(" ");
                 for (Enquete enquete : enqueteList) {
                     System.out.println(util.TEXT_GREEN + "Enquete: " + util.TEXT_RESET + enquete.getNome() +
@@ -192,7 +217,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
                     );
                 }
             } else {
-                System.out.println(util.TEXT_YELLOW + "Nenhuma enquete cadastrada no servidor!!!" + util.TEXT_RESET);
+                System.out.println(" ");
+                System.out.println(util.TEXT_YELLOW + "- Nenhuma enquete cadastrada no servidor!!!" + util.TEXT_RESET);
             }
 
         }

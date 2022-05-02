@@ -28,8 +28,7 @@ public class ClientImpl extends UnicastRemoteObject implements ClientInterface {
    }
 
    public String notifyMe(String message){
-      String returnMessage = "Call back received: " + message;
-      System.out.println(returnMessage);
+      String returnMessage = "\n" + message;
       return returnMessage;
    }
 

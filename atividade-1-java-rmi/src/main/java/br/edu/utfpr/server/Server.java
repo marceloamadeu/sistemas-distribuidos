@@ -5,13 +5,6 @@ import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 import java.io.*;
 
-/**
- * This class represents the object server for a distributed
- * object of class Callback, which implements the remote 
- * interface CallbackInterface.
- * @author M. L. Liu
- */
-
 public class Server {
 
   private static final int PORT = 33600;
@@ -26,15 +19,15 @@ public class Server {
       //Referência do serviço de nomes
       referenciaServicoNomes = startRegistry(PORT);
       //startRegistry(PORT);
-      ServerImpl exportedObj = new ServerImpl();
+      ServerImpl server = new ServerImpl();
 
-      Naming.rebind("rmi://" + HOSTNAME + ":" + PORT + "/callback", exportedObj);
+      Naming.rebind("rmi://" + HOSTNAME + ":" + PORT + "/callback", server);
       //referenciaServicoNomes.rebind("rmi://" + HOSTNAME + ":" + PORT + "/callback", exportedObj);
 
-      System.out.println("Callback Server ready.");
-    }
-    catch (Exception re) {
-      System.out.println("Exception in HelloServer.main: " + re);
+
+      //System.out.println("Callback Server ready.");
+    } catch (Exception e) {
+      System.out.println("Exception in Server.main: " + e);
     }
   }
 

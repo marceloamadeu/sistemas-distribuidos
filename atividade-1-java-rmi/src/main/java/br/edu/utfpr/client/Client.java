@@ -27,6 +27,7 @@ public class Client {
       ServerInterface server = (ServerInterface) Naming.lookup("rmi://localhost:" + PORT + "/callback");
       ClientInterface client = new ClientImpl(server);
       server.register(client);
+
       nameMenu(user, server, client);
 
       System.out.println("Unregistered for callback.");
@@ -60,10 +61,10 @@ public class Client {
         case 1:
 
           clientMainMenu(user, server, client);
-          List<Enquete> enquetes = new getEnquetes();
-          for (Enquete enquete : enquetes) {
-            System.out.println(enquete.getNome());
-          }
+          //List<Enquete> enquetes = new getEnquetes();
+          //for (Enquete enquete : enquetes) {
+          //  System.out.println(enquete.getNome());
+          //}
 
           break;
         case 2:
@@ -81,9 +82,14 @@ public class Client {
           server.addEnquete(nome, titulo, local, tempo, dataFinalEnquete, user);
           clientMainMenu(user, server, client);
           break;
-        case 9: in.close(); System.exit(0);
+        case 9:
+          in.close();
+          System.exit(0);
+          server.unregister(client);
         default: System.out.println("Input not recognized");
       }
+
+      System.out.println(server.sayHello());
     } while (true);
   }
 
