@@ -8,11 +8,12 @@ import java.rmi.RemoteException;
 
 /**
  * Server interface RMI - extends Remote
+ *
+ * EventManInterface
  */
 public interface ServerInterface extends Remote {
 
   public void registrarInteresse(String texto, ClientInterface client) throws RemoteException;
-
 
   public String sayHello() throws RemoteException;
   public void register(ClientInterface client) throws RemoteException;

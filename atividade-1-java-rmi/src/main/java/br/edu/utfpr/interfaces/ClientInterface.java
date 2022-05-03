@@ -1,6 +1,7 @@
 package br.edu.utfpr.interfaces;
 
 import br.edu.utfpr.entity.Enquete;
+import com.sun.source.tree.ConditionalExpressionTree;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -11,8 +12,9 @@ import java.rmi.RemoteException;
 public interface ClientInterface extends Remote {
 
 
-    public String notifyMe(String message)  throws java.rmi.RemoteException;
+    public String notifyMe(String message)  throws RemoteException;
 
+    public void notify(ClientInterface client)  throws RemoteException;
     /**
      * Se inscrever / acompanhar Enquete
      *

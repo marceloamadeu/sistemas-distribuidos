@@ -1,5 +1,6 @@
 package br.edu.utfpr.server;
 
+import br.edu.utfpr.client.Client;
 import br.edu.utfpr.entity.Enquete;
 import br.edu.utfpr.entity.Usuario;
 import br.edu.utfpr.interfaces.ClientInterface;
@@ -21,6 +22,8 @@ import java.util.List;
  * JRMP and obtaining a stub that communicates to the remote object.
  *
  * implements - ServerInterface
+ *
+ * EventManager
  */
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
 
@@ -32,7 +35,6 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
    protected Util util = null;
    protected Enquete enquete = null;
    protected EnqueteContainer container = null;
-
 
    public ServerImpl() throws RemoteException {
        super();
@@ -91,6 +93,8 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
             } else {
                 System.out.println("unregister: client wasn't registered. OK");
             }
+            logServer();
+            doCallbacks();
         }
     }
 
@@ -111,6 +115,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
         synchronized (userList) {
             userList.add(user);
             logServer();
+            doCallbacks();
         }
         return user;
     }
@@ -151,6 +156,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
             containerList.add(container);
 
             logServer();
+            doCallbacks();
         }
     }
 
@@ -167,15 +173,16 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
      *
      */
     private synchronized void doCallbacks() throws RemoteException {
-        for (Usuario user : userList) {
-            user.getClient().notifyMe(user.getNome() + " conectado(a) ao servidor!!!");
+        for (ClientInterface user : clientList) {
+            user.notifyMe(" conectado(a) ao servidor!!!");
+            user.notify(user);
         }
     }
 
     /**
      * Atualizar o log do Servidor
      */
-    private void logServer() {
+    public void logServer() {
         synchronized (userList) {
             util.cleanRefreshPrintServerHeader();
             System.out.println(" ");

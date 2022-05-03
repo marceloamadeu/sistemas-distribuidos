@@ -28,9 +28,57 @@ public class Client {
       ClientInterface client = new ClientImpl(server);
       server.register(client);
 
-      nameMenu(user, server, client);
 
-      System.out.println("Unregistered for callback.");
+      //Callback callback = new Callback ( ) ; // creation of the callback object
+      //System.out.println ("Starting call");
+      //server.callMeBack(callback) ; // call request
+
+
+      //nameMenu(user, server, client);
+
+      Scanner in = new Scanner(System.in);
+      do {
+        // Limpar o console e mostrar as opções do menu
+        util.cleanRefreshPrintClientHeader();
+        // Mensagem de bem-vindo
+        System.out.println(" ");
+        System.out.println(util.TEXT_YELLOW + "Bem-Vindo ao sistema de Agendamento de Reuniões (Enquetes)!!!" + util.TEXT_RESET);
+        System.out.println(" ");
+        System.out.println(util.TEXT_RESET + HOSTNAME + ":" + PORT + " - " + util.TEXT_GREEN + "online" + util.TEXT_RESET );
+        //Notificação
+        System.out.println(" ");
+        System.out.println("Notificação: " + server.sayHello());
+
+        // Menu
+        System.out.println(" ");
+        System.out.println("Menu - Selecione uma das opções:");
+        System.out.println(" ");
+        System.out.println(util.TEXT_GREEN + " [ 1 ] " + util.TEXT_RESET + "Cadastro Usuário");
+        System.out.println(util.TEXT_GREEN + " [ 9 ] " + util.TEXT_RESET + "Sair");
+        System.out.println(" ");
+        System.out.print("Digite o número [1 - 9]: ");
+        int choice = -1;
+        try {
+          choice = in.nextInt(); in.nextLine();
+        } catch (Exception e) {
+          in.nextLine();
+        }
+
+        switch (choice) {
+          case 1:
+            System.out.print("Digite seu nome: ");
+            String nome = in.nextLine();
+            user = server.addUser(nome, client);
+            clientMainMenu(user, server, client);
+            break;
+          case 9:
+            in.close();
+            System.exit(0);
+            server.unregister(client);
+          default: System.out.println("Opção não encontrada!!!");
+        }
+      } while (true);
+
     }catch (Exception e) {
       System.out.println("Exception in CallbackClient: " + e);
     }

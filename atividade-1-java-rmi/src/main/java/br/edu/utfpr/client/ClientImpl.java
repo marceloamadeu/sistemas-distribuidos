@@ -29,7 +29,13 @@ public class ClientImpl extends UnicastRemoteObject implements ClientInterface {
 
    public String notifyMe(String message){
       String returnMessage = "\n" + message;
+      System.out.println(returnMessage);
       return returnMessage;
+   }
+
+   @Override
+   public void notify(ClientInterface client) throws RemoteException {
+      System.out.println("aeeeeeeeeee");
    }
 
    @Override

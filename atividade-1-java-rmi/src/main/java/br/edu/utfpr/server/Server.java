@@ -9,26 +9,25 @@ public class Server {
 
   private static final int PORT = 33600;
   private static final String HOSTNAME = "localhost";
+  private ServerImpl server = null;
+  private Registry referenciaServicoNomes = null;
 
-  public static void main(String args[]) {
-    InputStreamReader is = new InputStreamReader(System.in);
-    BufferedReader br = new BufferedReader(is);
-    Registry referenciaServicoNomes = null;
-
-    try{
+  public Server() {
+    try {
       //Referência do serviço de nomes
       referenciaServicoNomes = startRegistry(PORT);
-      //startRegistry(PORT);
-      ServerImpl server = new ServerImpl();
+      server = new ServerImpl();
 
       Naming.rebind("rmi://" + HOSTNAME + ":" + PORT + "/callback", server);
       //referenciaServicoNomes.rebind("rmi://" + HOSTNAME + ":" + PORT + "/callback", exportedObj);
-
-
-      //System.out.println("Callback Server ready.");
     } catch (Exception e) {
-      System.out.println("Exception in Server.main: " + e);
+      System.out.println("Ocorreu um erro em Server.main: " + e);
     }
+  }
+
+  public static void main(String args[]) {
+    Server serverMain = new Server();
+    serverMain.server.logServer();
   }
 
   /**
