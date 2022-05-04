@@ -25,11 +25,6 @@ public class Server {
     }
   }
 
-  public static void main(String args[]) {
-    Server serverMain = new Server();
-    serverMain.server.logServer();
-  }
-
   /**
    * Método usado para registrar/acessar o serviço de nomes Java RMI
    *
@@ -49,6 +44,11 @@ public class Server {
       registry = LocateRegistry.createRegistry(port);
     }
     return registry;
+  }
+
+  public static void main(String args[]) {
+    Server serverMain = new Server();
+    serverMain.server.logServer();
   }
 
 }
