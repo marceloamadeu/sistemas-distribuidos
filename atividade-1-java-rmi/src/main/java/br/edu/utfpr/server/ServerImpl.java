@@ -88,11 +88,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     @Override
     public void unregister(ClientInterface client) throws RemoteException {
         synchronized(clientList) {
-            if (clientList.remove(client)) {
-                System.out.println("Unregistered client OK");
-            } else {
-                System.out.println("unregister: client wasn't registered. OK");
-            }
+            clientList.remove(client);
             logServer();
             doCallbacks();
         }
@@ -129,7 +125,11 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     @Override
     public void removeUser(Usuario user) throws RemoteException {
         synchronized (userList) {
+
             userList.remove(user);
+            clientList.remove(user.getClient());
+            logServer();
+            doCallbacks();
         }
     }
 
@@ -193,6 +193,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
             } else {
                 System.out.println(util.TEXT_YELLOW + "- Nenhum cliente registrado no servidor!!!" + util.TEXT_RESET);
             }
+            System.out.println("-----------------------------------------------------------------");
 
             // Lista de Usuarios / Clientes
             if (userList.size() > 0) {
@@ -209,6 +210,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
                 System.out.println(" ");
                 System.out.println(util.TEXT_YELLOW + "- Nenhum usuário cadastrado no servidor!!!" + util.TEXT_RESET);
             }
+            System.out.println("-----------------------------------------------------------------");
 
             // Lista de Enquetes
             if (enqueteList.size() > 0) {
@@ -227,7 +229,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
                 System.out.println(" ");
                 System.out.println(util.TEXT_YELLOW + "- Nenhuma enquete cadastrada no servidor!!!" + util.TEXT_RESET);
             }
-
+            System.out.println("-----------------------------------------------------------------");
         }
     }
 }

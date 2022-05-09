@@ -107,9 +107,9 @@ public class Client {
           clientMainMenu(user, server, client);
           break;
         case 9:
+          server.removeUser(user);
           in.close();
           System.exit(0);
-          server.unregister(client);
         default: System.out.println("Input not recognized");
       }
 
@@ -155,9 +155,9 @@ public class Client {
           clientMainMenu(user, server, client);
           break;
         case 9:
+          server.unregister(client);
           in.close();
           System.exit(0);
-          server.unregister(client);
         default: System.out.println("Opção não encontrada!!!");
       }
     } while (true);
